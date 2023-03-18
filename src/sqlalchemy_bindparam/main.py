@@ -1,6 +1,5 @@
 import logging
 import logging.config
-from typing import Any
 
 import pydantic
 import psycopg2.extras
