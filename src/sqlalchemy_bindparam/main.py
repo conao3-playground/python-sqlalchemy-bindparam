@@ -86,5 +86,16 @@ def main2():
     logger.info(User.query.filter(User.user_cd == 'u-001').one())
 
 
+def main3():
+    stmt = sa.select(User).where(User.user_cd.in_(['u-001', 'u-002']))
+    logger.info(session.scalars(stmt).all())
+
+
+def main4():
+    lst = [f'u-{i:03}' for i in range(100)]
+    stmt = sa.select(User).where(User.user_cd.in_(lst))
+    logger.info(session.scalars(stmt).all())
+
+
 if __name__ == "__main__":
-    main2()
+    main4()
