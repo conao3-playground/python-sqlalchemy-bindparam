@@ -82,5 +82,9 @@ def main1():
     logger.info(User.query.all())
 
 
+def main2():
+    logger.info(User.query.filter(User.user_cd == 'u-001').one())
+
+
 if __name__ == "__main__":
-    main1()
+    main2()
