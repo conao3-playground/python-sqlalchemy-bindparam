@@ -1,0 +1,43 @@
+version: 1
+
+disable_existing_loggers: False
+
+formatters:
+  simpleFormatter:
+    format: '[%(levelname)s] %(asctime)s - %(name)s - %(message)s'
+
+  dbFormatter:
+    format: '■ %(message)s;'
+
+handlers:
+  consoleHandler:
+    class: logging.StreamHandler
+    level: INFO
+    formatter: simpleFormatter
+
+  dbFileHandler:
+    class: logging.FileHandler
+    level: INFO
+    formatter: dbFormatter
+    filename: /tmp/postgres_db.log
+
+loggers:
+  __main__: &logger
+    level: INFO
+    handlers: [consoleHandler]
+
+  __main__/db: &db_logger
+    level: INFO
+    handlers: [dbFileHandler]
+    propagate: False
+
+  sqlalchemy_bindparam.main: *logger
+  sqlalchemy_bindparam.main/db: *db_logger
+
+  sqlalchemy: *logger
+
+  sqlalchemy.orm.mapper.Mapper: &warning
+    level: WARNING
+
+  sqlalchemy.orm.relationships.RelationshipProperty: *warning
+  sqlalchemy.orm.strategies.LazyLoader: *warning
