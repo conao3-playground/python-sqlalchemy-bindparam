@@ -60,12 +60,14 @@ engine = sa.create_engine(
 session = sa_orm.scoped_session(
     sa_orm.sessionmaker(autocommit=False, autoflush=False, bind=engine)
 )
-Base = sa_orm.declarative_base()
-Base.query = session.query_property()
-def Base__repr__(self: Any) -> str:
-    args = {k: v for k, v in self.__dict__.items() if not k.startswith("_")}
-    return f'{self.__class__.__name__}({args})'
-Base.__repr__ = Base__repr__
+
+
+class Base(sa_orm.DeclarativeBase):
+    query = session.query_property()
+
+    def __repr__(self) -> str:
+        args = {k: v for k, v in self.__dict__.items() if not k.startswith("_")}
+        return f'{self.__class__.__name__}({args})'
 
 
 class User(Base):
@@ -75,9 +77,9 @@ class User(Base):
 
 
 def main1():
-    print("Hello World!")
-    print(settings)
-    print(User.query.all())
+    logger.info("Hello World!")
+    logger.info(settings)
+    logger.info(User.query.all())
 
 
 if __name__ == "__main__":
