@@ -4,12 +4,13 @@ version = "0.1.0"
 description = ""
 authors = ["Naoya Yamashita <conao3@gmail.com>"]
 readme = "README.md"
-packages = [{include = "sqlalchemy_bindparam"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
 sqlalchemy = {extras = ["postgresql"], version = "^2.0.6"}
 pydantic = {extras = ["dotenv"], version = "^1.10.6"}
+pyyaml = "^6.0"
+sqlparse = "^0.4.3"
 
 
 [build-system]
